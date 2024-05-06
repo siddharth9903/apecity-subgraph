@@ -1,0 +1,18 @@
+type OwnershipTransferred @entity(immutable: true) {
+  id: Bytes!
+  previousOwner: Bytes! # address
+  newOwner: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TokenCreated @entity(immutable: true) {
+  id: Bytes!
+  token: Bytes! # address
+  bondingCurve: Bytes! # address
+  reserveRatio: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
