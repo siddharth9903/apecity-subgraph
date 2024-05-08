@@ -20,6 +20,7 @@ services:
       postgres_db: graph-node
       ipfs: "ipfs:5001"
       ethereum: "mainnet:http://host.docker.internal:8545"
+      # ethereum: "mainnet:https://virtual.base.rpc.tenderly.co/2c0f8db6-d957-4d90-9d8f-f2c8814109b5"
       GRAPH_LOG: info
   ipfs:
     image: ipfs/kubo:v0.17.0
@@ -30,7 +31,7 @@ services:
   postgres:
     image: postgres:14
     ports:
-      - "5432:5432"
+      - "5434:5432"
     command:
       [
         "postgres",

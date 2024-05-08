@@ -1,18 +1,155 @@
-type OwnershipTransferred @entity(immutable: true) {
-  id: Bytes!
-  previousOwner: Bytes! # address
-  newOwner: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+# type OwnershipTransferred @entity(immutable: true) {
+#   id: Bytes!
+#   previousOwner: Bytes! # address
+#   newOwner: Bytes! # address
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type TokenCreated @entity(immutable: true) {
+#   id: Bytes!
+#   token: Bytes! # address
+#   bondingCurve: Bytes! # address
+#   reserveRatio: BigInt! # uint256
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+type Factory @entity {
+  # factory address
+  id: ID!
+  # token info
+  tokenCount: Int!
+  # pair info
+  bondingCurveCount: Int!
+  # transactions
+  txCount: BigInt!
+
+  bondingCurves: [BondingCurve!] @derivedFrom(field: "factory")
+  tokens: [Token!] @derivedFrom(field: "factory")
 }
 
-type TokenCreated @entity(immutable: true) {
-  id: Bytes!
-  token: Bytes! # address
-  bondingCurve: Bytes! # address
-  reserveRatio: BigInt! # uint256
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+type Token @entity {
+  # token address
+  id: ID!
+
+  # mirrored from the smart contract
+  symbol: String!
+  name: String!
+  imageURL: String!
+  decimals: BigInt!
+
+  # used for other stats like marketcap
+  totalSupply: BigInt!
+  bondingCurve: BondingCurve!
+  factory: Factory!
 }
+
+type BondingCurve @entity {
+  # pair address
+  id: ID!
+  token: Token!
+
+  reserveRatio: BigInt!
+  poolBalance: BigDecimal!
+  circulatingSupply: BigDecimal!
+  active: Boolean!
+  factory: Factory!
+  
+  currentPrice: BigDecimal!
+  marketCap: BigDecimal!
+
+  ethAmountToCompleteCurve: BigDecimal!
+  tokenAmountToCompleteCurve: BigDecimal!
+
+  totalEthAmountToCompleteCurve: BigDecimal!
+  totalTokenAmountToCompleteCurve: BigDecimal!
+
+  uniswapRouter: Bytes!
+  uniswapLiquidityPool: Bytes
+
+  txCount: BigInt!
+
+  # creation stats
+  createdAtTimestamp: BigInt!
+  createdAtBlockNumber: BigInt!
+
+  trades: [Trade!] @derivedFrom(field: "bondingCurve")
+}
+
+type User @entity {
+  id: ID!
+  trades: [Trade!] @derivedFrom(field: "user")
+}
+
+enum TradeType {
+  BUY
+  SELL
+}
+
+type Trade @entity {
+  # transaction hash + "-" + index in swaps Transaction array
+  id: ID!
+  transaction: Transaction!
+  timestamp: BigInt! # need this to pull recent txns for specific token or pair
+  bondingCurve: BondingCurve!
+
+  type: TradeType!
+  inAmount: BigDecimal!
+  outAmount: BigDecimal!
+
+  avgPrice: BigDecimal!
+
+  user: User!
+}
+
+type Transaction @entity {
+  id: ID! # txn hash
+  blockNumber: BigInt!
+  timestamp: BigInt!
+
+  trade: Trade!
+}
+
+# # Data accumulated and condensed into day stats for all of Uniswap
+# type ApefunDayData @entity {
+#   id: ID! # timestamp rounded to current day by dividing by 86400
+#   date: Int!
+
+#   dailyVolumeETH: BigDecimal!
+#   totalVolumeETH: BigDecimal!
+
+#   totalLiquidityETH: BigDecimal!
+
+#   txCount: BigInt!
+# }
+
+# type bondingCurveHourData @entity {
+#   id: ID!
+#   hourStartUnix: Int! # unix timestamp for start of hour
+#   bondingCurve: BondingCurve!
+
+#   # reserves
+#   poolBalance: BigDecimal!
+
+#   # volume stats
+#   hourlyVolumeEth: BigDecimal!
+#   hourlyVolumeToken: BigDecimal!
+#   hourlyTxns: BigInt!
+# }
+
+# type bondingCurveDayData @entity {
+#   id: ID!
+#   hourStartUnix: Int! # unix timestamp for start of hour
+#   bondingCurve: BondingCurve!
+
+#   # reserves
+#   poolBalance: BigDecimal!
+
+#   # volume stats
+#   dailyVolumeEth: BigDecimal!
+#   dailyVolumeToken: BigDecimal!
+#   dailyTxns: BigInt!
+# }

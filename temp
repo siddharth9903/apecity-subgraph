@@ -1,0 +1,14 @@
+{
+  // "mainnet": {
+  //   "ApeFactory": {
+  //     "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+  //     "startBlock": 1
+  //   }
+  // },
+  "mainnet": {
+    "ApeFactory": {
+      "address": "0xdeca67a17195db554bba847ad8b5acbb18e2c8a3",
+      "startBlock": 13685159
+    }
+  }
+}

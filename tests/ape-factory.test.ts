@@ -9,7 +9,7 @@ import {
 import { Address, BigInt } from "@graphprotocol/graph-ts"
 import { OwnershipTransferred } from "../generated/schema"
 import { OwnershipTransferred as OwnershipTransferredEvent } from "../generated/ApeFactory/ApeFactory"
-import { handleOwnershipTransferred } from "../src/ape-factory"
+import { handleOwnershipTransferred } from "../src/mappings/ape-factory"
 import { createOwnershipTransferredEvent } from "./ape-factory-utils"
 
 // Tests structure (matchstick-as >=0.5.0)
