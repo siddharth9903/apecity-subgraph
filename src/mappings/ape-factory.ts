@@ -1,9 +1,9 @@
 
 /* eslint-disable prefer-const */
 import { TokenCreated } from "../types/ApeFactory/ApeFactory";
-import { BondingCurve, Factory, Token } from "../types/schema";
-import { BigDecimal, BigInt, log } from '@graphprotocol/graph-ts'
+import { BondingCurve, Factory, Token, TokenMetaData } from "../types/schema";
 import { BondingCurve as BondingCurveTemplate } from '../types/templates'
+import { BigDecimal, BigInt, log, ipfs, json, JSONValue } from '@graphprotocol/graph-ts'
 
 import {
   exponentToBigDecimal,
@@ -19,6 +19,7 @@ import {
   fetchTokenName,
   fetchTokenSymbol,
   fetchTokenTotalSupply,
+  fetchTokenURI,
   ZERO_BD,
   ZERO_BI,
 } from './helpers'
@@ -42,13 +43,12 @@ export function handleTokenCreated(event: TokenCreated): void {
   let token = Token.load(event.params.token.toHexString())
   let bondingCurve = BondingCurve.load(event.params.bondingCurve.toHexString())
 
-  // fetch info if null
   if (token === null) {
     token = new Token(event.params.token.toHexString())
     token.symbol = fetchTokenSymbol(event.params.token)
     token.name = fetchTokenName(event.params.token)
-    token.imageURL = token.name
-    
+    token.tokenURI = fetchTokenURI(event.params.token)
+
     token.totalSupply = fetchTokenTotalSupply(event.params.token)
     let decimals = fetchTokenDecimals(event.params.token)
 
@@ -61,6 +61,50 @@ export function handleTokenCreated(event: TokenCreated): void {
 
     // token.factory = FACTORY_ADDRESS
     token.factory = event.address.toHexString()
+
+    // Fetch metadata from IPFS
+    let metadataURI = token.tokenURI
+    if (metadataURI.startsWith('https://ipfs.io/ipfs/')) {
+
+      let metadataHash = metadataURI.split('https://ipfs.io/ipfs/')[1]
+      let metadataBytes = ipfs.cat(metadataHash)
+      if (!metadataBytes) return;   
+      let tokenMetaData = new TokenMetaData(token.id)
+
+      let metadataValue = json.fromBytes(metadataBytes).toObject();
+
+      let name = metadataValue.get('name')
+      let symbol = metadataValue.get('symbol')
+      let image = metadataValue.get('image')
+      let description = metadataValue.get('description')
+      let twitter = metadataValue.get('twitter')
+      let telegram = metadataValue.get('telegram')
+      let website = metadataValue.get('website')
+
+      if (!name || !symbol || !image || !description) { 
+        return
+      }
+
+      tokenMetaData.name = name.toString()
+      tokenMetaData.symbol = symbol.toString()
+      tokenMetaData.image = image.toString()
+      tokenMetaData.description = description.toString()
+
+      if(twitter){
+        tokenMetaData.twitter = twitter.toString()
+      }
+
+      if (telegram) {
+        tokenMetaData.telegram = telegram.toString()
+      }
+
+      if (website) {
+        tokenMetaData.website = website.toString()
+      }
+
+      tokenMetaData.save()
+      token.metaData = tokenMetaData.id;
+    }
   }
 
   // fetch info if null

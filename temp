@@ -12,3 +12,5 @@
     }
   }
 }
+
+    "deploy-ipfs-pinata": "graph deploy --node http://localhost:8020/ --ipfs https://rose-real-kangaroo-658.mypinata.cloud?pinataGatewayToken=INfM5jjq5XI94OcaBMa1KYHQ_aupy2QfSy63zL4QpXSA7sbyKzABccj8rb4jRi_O APE",

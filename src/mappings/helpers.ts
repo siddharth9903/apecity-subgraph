@@ -117,6 +117,16 @@ export function fetchTokenName(tokenAddress: Address): string {
     return nameValue
 }
 
+export function fetchTokenURI(tokenAddress: Address): string {
+    let contract = ERC20.bind(tokenAddress)
+    let tokenURIValue = 'unknown'
+    let tokenURIResult = contract.try_tokenURI()
+    if (!tokenURIResult.reverted) {
+        tokenURIValue = tokenURIResult.value
+    }
+    return tokenURIValue
+}
+
 // HOT FIX: we cant implement try catch for overflow catching so skip total supply parsing on these tokens that overflow
 // TODO: find better way to handle overflow
 let SKIP_TOTAL_SUPPLY: string[] = ['0x0000000000bf2686748e1c0255036e7617e7e8a5']
