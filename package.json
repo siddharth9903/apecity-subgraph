@@ -10,7 +10,9 @@
     "create-local": "graph create --node http://localhost:8020/ APE",
     "remove-local": "graph remove --node http://localhost:8020/ APE",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 APE",
-    "deploy-ipfs-pinata": "graph deploy APE --node http://localhost:8020/ --ipfs https://rose-real-kangaroo-658.mypinata.cloud?pinataGatewayToken=INfM5jjq5XI94OcaBMa1KYHQ_aupy2QfSy63zL4QpXSA7sbyKzABccj8rb4jRi_O --ipfs-hash QmQvenuMNpWWwveKVYu2NUPMqzugJ7oyyhWTowpq8auWr7",
+    "create-aws": "graph create --node http://54.224.227.245:8020 APE",
+    "remove-aws": "graph remove --node http://54.224.227.245:8020 APE",
+    "deploy-aws": "graph deploy --node http://54.224.227.245:8020/ --ipfs http://54.224.227.245:5001 APE",
     "test": "graph test"
   },
   "dependencies": {

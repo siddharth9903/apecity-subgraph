@@ -13,9 +13,11 @@ dataSources:
     source:
       # address: "0x7722b77e691cea11047f030f1b128432a1a6ffca"
       # startBlock: 14142521
-      address: "0x43bbaC1E810E19C1608a26626FCc04D45f5918f5"
+      # address: "0x43bbaC1E810E19C1608a26626FCc04D45f5918f5"
+      # startBlock: 14142560
+      address: "0xb4FBc25204d26C4a937F4CBa67087F70B21bb6c5"
       abi: ApeFactory
-      startBlock: 14142560
+      startBlock: 14142579
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
