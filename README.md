@@ -47,20 +47,21 @@ https://e5jo2aw5o0.execute-api.us-east-1.amazonaws.com/graphql
 From the development machine, the GraphQL endpoint is: 
 http://<EC2 IP>/subgraphs/name/<NAME OF SUBGRAPH>
 http://54.175.39.126/subgraphs/name/APE
-
-https://0d5defgrki.execute-api.us-east-1.amazonaws.com
-http://3.94.196.43/subgraphs/name/APE
-http://3.94.196.43/subgraphs/name/APE/graphql
-
-http://3.94.196.43/graphql
-
+(
+GRAPH_QL interface for queries
 http://54.224.227.245/subgraphs/name/APE/graphql
+)
+
+VITE_GRAPHQL_ENDPOINT=
+https://<END_POINT>/subgraphs/name/<SUBGRAPH_NAME>
+https://3c0y2qovtk.execute-api.us-east-1.amazonaws.com/subgraphs/name/APE
+
 
 
 
 
 <!-- to check syncing status of graph -->
-<!-- curl --location 'https://gyl5ejhopc.execute-api.us-east-1.amazonaws.com/graphql' \
+<!-- curl --location 'https://3c0y2qovtk.execute-api.us-east-1.amazonaws.com/graphql' \
 --header 'Content-Type: application/json' \
 --header 'authorization: secretToken' \
 --data '{"query":"query { indexingStatuses { subgraph synced health fatalError { block { number } message handler } nonFatalErrors { block { number } message handler } chains { network chainHeadBlock { number } earliestBlock { number } latestBlock { number } lastHealthyBlock { number } } entityCount node } }","variables":{}}' -->
