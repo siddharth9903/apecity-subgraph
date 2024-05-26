@@ -96,6 +96,9 @@ type Trade @entity {
   inAmount: BigDecimal!
   outAmount: BigDecimal!
 
+  openPrice: BigDecimal!
+  closePrice: BigDecimal!
+  
   avgPrice: BigDecimal!
 
   user: User!

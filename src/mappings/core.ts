@@ -54,6 +54,8 @@ export function handleBuy(event: LogBuy): void {
     createUser(buyer)
 
     let apeFactory = Factory.load(FACTORY_ADDRESS)!
+    let notUpdatedBondingCurve = BondingCurve.load(bondingCurveAddress.toHexString())!
+    let lastPrice = notUpdatedBondingCurve.currentPrice
     let bondingCurve = updateBondingCurveAndFactory(bondingCurveAddress, apeFactory)
 
     let transaction = createOrLoadTransaction(event)
@@ -67,6 +69,9 @@ export function handleBuy(event: LogBuy): void {
     trade.type = "BUY"
     trade.inAmount = convertEthToDecimal(event.params.totalCost)
     trade.outAmount = convertTokenToDecimal(event.params.amountBought, token.decimals)
+
+    trade.openPrice = lastPrice
+    trade.closePrice = bondingCurve.currentPrice
     trade.avgPrice = trade.inAmount.div(trade.outAmount)
 
     let userEntity = User.load(buyer.toHexString())!
@@ -90,6 +95,9 @@ export function handleSell(event: LogSell): void {
     createUser(seller)
 
     let apeFactory = Factory.load(FACTORY_ADDRESS)!
+    let notUpdatedBondingCurve = BondingCurve.load(bondingCurveAddress.toHexString())!
+    let lastPrice = notUpdatedBondingCurve.currentPrice
+
     let bondingCurve = updateBondingCurveAndFactory(bondingCurveAddress, apeFactory)
 
     let transaction = createOrLoadTransaction(event)
@@ -103,6 +111,9 @@ export function handleSell(event: LogSell): void {
     trade.type = "SELL"
     trade.inAmount = convertTokenToDecimal(event.params.amountSell, token.decimals)
     trade.outAmount = convertEthToDecimal(event.params.reward)
+
+    trade.openPrice = lastPrice
+    trade.closePrice = bondingCurve.currentPrice
     trade.avgPrice = trade.outAmount.div(trade.inAmount)
 
     let userEntity = User.load(seller.toHexString())!
