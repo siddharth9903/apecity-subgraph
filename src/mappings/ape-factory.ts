@@ -230,8 +230,9 @@ export function handleTokenCreated(event: TokenCreated): void {
         tokenMetaData.website = website.toString()
       }
 
-      tokenMetaData.save()
       token.metaData = tokenMetaData.id;
+      tokenMetaData.token = token.id;
+      tokenMetaData.save()
     }
   }
 

@@ -1,3 +1,19 @@
+type _Schema_
+  @fulltext(
+    name: "tokenMetaDataSearch"
+    language: en
+    algorithm: rank
+    include: [
+      {
+        entity: "TokenMetaData"
+        fields: [
+          { name: "name" }
+          { name: "description" }
+          { name: "symbol" }
+        ]
+      }
+    ]
+  )
 
 type Factory @entity {
   # factory address
@@ -41,6 +57,8 @@ type TokenMetaData @entity{
   twitter: String
   telegram: String
   website: String
+
+  token: Token!
 }
 
 type BondingCurve @entity {

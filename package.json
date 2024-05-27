@@ -12,9 +12,9 @@
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 APE",
     "deploy-local-ipfs-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 APE",
     "deploy-local-ipfs-aws": "graph deploy --node http://localhost:8020/ --ipfs http://100.27.85.244:5001 APE",
-    "create-aws": "graph create --node http://54.89.187.3:8020 APE",
-    "remove-aws": "graph remove --node http://54.89.187.3:8020 APE",
-    "deploy-aws": "graph deploy --node http://54.89.187.3:8020/ --ipfs http://100.27.85.244:5001 APE",
+    "create-aws": "graph create --node http://52.204.113.55:8020 APE",
+    "remove-aws": "graph remove --node http://52.204.113.55:8020 APE",
+    "deploy-aws": "graph deploy --node http://52.204.113.55:8020/ --ipfs http://100.27.85.244:5001 APE",
     "test": "graph test"
   },
   "dependencies": {

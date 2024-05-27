@@ -99,7 +99,7 @@ indexerHints:
 schema:
   file: ./schema.graphql
 features:
-  # - fullTextSearch
+  - fullTextSearch
   - ipfsOnEthereumContracts
 dataSources:
   - kind: ethereum
