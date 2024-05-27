@@ -29,7 +29,7 @@ function updateBondingCurveAndFactory(bondingCurveAddress: Address, apeFactory: 
     bondingCurve.tokenAmountToCompleteCurve = fetchTokenAmountToCompleteCurve(bondingCurveAddress)
 
     bondingCurve.txCount = bondingCurve.txCount.plus(ONE_BI)
-
+    
     apeFactory.txCount = apeFactory.txCount.plus(ONE_BI)
 
     return bondingCurve
@@ -79,6 +79,7 @@ export function handleBuy(event: LogBuy): void {
 
     transaction.trade = trade.id
 
+    bondingCurve.lastActivity = trade.timestamp
     transaction.save()
     trade.save()
     bondingCurve.save()
@@ -121,6 +122,7 @@ export function handleSell(event: LogSell): void {
 
     transaction.trade = trade.id
 
+    bondingCurve.lastActivity = trade.timestamp
     transaction.save()
     trade.save()
     bondingCurve.save()

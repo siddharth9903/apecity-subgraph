@@ -72,6 +72,8 @@ type BondingCurve @entity {
   createdAtTimestamp: BigInt!
   createdAtBlockNumber: BigInt!
 
+  lastActivity: BigInt!
+
   trades: [Trade!] @derivedFrom(field: "bondingCurve")
 }
 
@@ -98,7 +100,7 @@ type Trade @entity {
 
   openPrice: BigDecimal!
   closePrice: BigDecimal!
-  
+
   avgPrice: BigDecimal!
 
   user: User!

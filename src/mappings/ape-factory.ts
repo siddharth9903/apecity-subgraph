@@ -268,6 +268,7 @@ export function handleTokenCreated(event: TokenCreated): void {
     bondingCurve.createdAtBlockNumber = event.block.number
     bondingCurve.active = true
     bondingCurve.txCount = ZERO_BI
+    bondingCurve.lastActivity = event.block.timestamp
 
     // bondingCurve.factory = FACTORY_ADDRESS
     bondingCurve.factory = event.address.toHexString()
