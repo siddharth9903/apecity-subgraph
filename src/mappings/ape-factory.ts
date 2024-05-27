@@ -135,6 +135,7 @@ import { BigDecimal, BigInt, log, ipfs, json, JSONValue } from '@graphprotocol/g
 import {
   exponentToBigDecimal,
   FACTORY_ADDRESS,
+  // FACTORY_ADDRESS,
   fetchBondingCurveCirculatingSupply,
   fetchBondingCurveCurrentPrice,
   fetchBondingCurvePoolBalance,

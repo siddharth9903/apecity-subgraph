@@ -12,7 +12,8 @@ import { TokenDefinition } from './tokenDefinition'
 
 export const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
 // export const FACTORY_ADDRESS = '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f'
-export const FACTORY_ADDRESS = '0x7722b77e691cea11047f030f1b128432a1a6ffca'
+// export const FACTORY_ADDRESS = '0x7722b77e691cea11047f030f1b128432a1a6ffca'
+export const FACTORY_ADDRESS = '0xb4FBc25204d26C4a937F4CBa67087F70B21bb6c5'
 
 export let ZERO_BI = BigInt.fromI32(0)
 export let ONE_BI = BigInt.fromI32(1)
@@ -20,7 +21,7 @@ export let ZERO_BD = BigDecimal.fromString('0')
 export let ONE_BD = BigDecimal.fromString('1')
 export let BI_18 = BigInt.fromI32(18)
 
-export let factoryContract = ApeFactoryContract.bind(Address.fromString(FACTORY_ADDRESS))
+// export let factoryContract = ApeFactoryContract.bind(Address.fromString(FACTORY_ADDRESS))
 
 // rebass tokens, dont count in tracked volume
 export let UNTRACKED_PAIRS: string[] = ['0x9ea3b5b4ec044b70375236a281986106457b20ef']
