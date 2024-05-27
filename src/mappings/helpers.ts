@@ -204,7 +204,7 @@ export function fetchBondingCurveCurrentPrice(bondingCurveAddress: Address): Big
     let _tokenAmountOut = BigInt.fromString(bigDecimalExp18().toString())
 
     let result = contract.try_estimateEthInForExactTokensOut(
-        _supply ,
+        _supply , 
         _connectorBalance, 
         _connectorWeight, 
         _tokenAmountOut
@@ -223,6 +223,16 @@ export function fetchEthAmountToCompleteCurve(bondingCurveAddress: Address): Big
     if (!result.reverted) {
         ethAmountValue = result.value
     }
+    return convertEthToDecimal(ethAmountValue)
+}
+
+export function fetchTotalEthAmountToCompleteCurve(bondingCurveAddress: Address): BigDecimal {
+    let LP_TRANSFER_ETH_AMOUNT = BigInt.fromString('4000000000000000000');
+    let LP_TRANSFER_FEE_AMOUNT = BigInt.fromString('200001000000000000');
+    let initialPoolBalance = BigInt.fromString('8571428');
+
+    let ethAmountValue = LP_TRANSFER_ETH_AMOUNT.plus(LP_TRANSFER_FEE_AMOUNT).minus(initialPoolBalance)
+
     return convertEthToDecimal(ethAmountValue)
 }
 
@@ -247,6 +257,29 @@ export function fetchTokenAmountToCompleteCurve(bondingCurveAddress: Address): B
         tokenAmountValue = result.value
     }
     return convertEthToDecimal(tokenAmountValue)
+}
+
+export function fetchTotalTokenAmountToCompleteCurve(bondingCurveAddress: Address): BigDecimal {
+    let LP_TRANSFER_ETH_AMOUNT = BigInt.fromString('4000000000000000000');
+    let LP_TRANSFER_FEE_AMOUNT = BigInt.fromString('200001000000000000');
+    let initialPoolBalance = BigInt.fromString('8571428');
+    let ethAmountValue = LP_TRANSFER_ETH_AMOUNT.plus(LP_TRANSFER_FEE_AMOUNT).minus(initialPoolBalance)
+
+    let contract = BondingCurveContract.bind(bondingCurveAddress)
+
+    let _initialTokenSupply = BigInt.fromString('1000000000000000000000');
+    let _connectorBalance = contract.try_poolBalance().value
+    let _connectorWeight = contract.try_reserveRatio().value
+    let _depositAmount = ethAmountValue
+
+    let result = contract.try_calculatePurchaseReturn(
+        _initialTokenSupply,
+        _connectorBalance,
+        _connectorWeight,
+        _depositAmount,
+    )
+
+    return convertEthToDecimal(result.value)
 }
 
 

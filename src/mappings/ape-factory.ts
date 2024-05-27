@@ -148,6 +148,8 @@ import {
   fetchTokenSymbol,
   fetchTokenTotalSupply,
   fetchTokenURI,
+  fetchTotalEthAmountToCompleteCurve,
+  fetchTotalTokenAmountToCompleteCurve,
   ZERO_BD,
   ZERO_BI,
 } from './helpers'
@@ -260,8 +262,8 @@ export function handleTokenCreated(event: TokenCreated): void {
     bondingCurve.ethAmountToCompleteCurve = fetchEthAmountToCompleteCurve(event.params.bondingCurve)
     bondingCurve.tokenAmountToCompleteCurve = fetchTokenAmountToCompleteCurve(event.params.bondingCurve)
 
-    bondingCurve.totalEthAmountToCompleteCurve = bondingCurve.ethAmountToCompleteCurve
-    bondingCurve.totalTokenAmountToCompleteCurve = bondingCurve.tokenAmountToCompleteCurve
+    bondingCurve.totalEthAmountToCompleteCurve = fetchTotalEthAmountToCompleteCurve(event.params.bondingCurve)
+    bondingCurve.totalTokenAmountToCompleteCurve = fetchTotalTokenAmountToCompleteCurve(event.params.bondingCurve)
 
     bondingCurve.uniswapRouter = fetchBondingCurveUniswapRouter(event.params.bondingCurve)
 
