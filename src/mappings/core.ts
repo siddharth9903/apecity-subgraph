@@ -125,6 +125,7 @@ export function handleSell(event: LogSell): void {
 
     bondingCurve.lastActivity = trade.timestamp
     bondingCurve.volume = bondingCurve.volume.plus(trade.outAmount)
+
     transaction.save()
     trade.save()
     bondingCurve.save()
@@ -137,7 +138,8 @@ export function handleBondingCurveCompletion(event: BondingCurveComplete): void 
     let bondingCurve = BondingCurve.load(event.address.toHexString())!
 
     bondingCurve.active = false;
-    bondingCurve.uniswapLiquidityPool = event.params.liquidityPoolAddress
+    bondingCurve.uniswapLiquidityPool = event.params.liquidityPoolAddress;
+    bondingCurve.lpCreationTimestamp = event.block.timestamp;
 
     bondingCurve.save()
     log.debug('curve complete logging', [])
