@@ -138,6 +138,7 @@ import {
   // FACTORY_ADDRESS,
   fetchBondingCurveCirculatingSupply,
   fetchBondingCurveCurrentPrice,
+  fetchBondingCurveInitialPrice,
   fetchBondingCurvePoolBalance,
   fetchBondingCurveReserveRatio,
   fetchBondingCurveUniswapRouter,
@@ -246,7 +247,8 @@ export function handleTokenCreated(event: TokenCreated): void {
     const poolBalance = fetchBondingCurvePoolBalance(event.params.bondingCurve)
     const circulatingSupply = fetchBondingCurveCirculatingSupply(event.params.bondingCurve)
 
-    const currentPrice = fetchBondingCurveCurrentPrice(event.params.bondingCurve)
+    // const currentPrice = fetchBondingCurveCurrentPrice(event.params.bondingCurve)
+    const currentPrice = fetchBondingCurveInitialPrice(event.params.bondingCurve)
     const marketCap = currentPrice.times(token.totalSupply.toBigDecimal().div(exponentToBigDecimal(BigInt.fromString('18'))))
 
     bondingCurve.reserveRatio = reserveRatio
@@ -259,11 +261,11 @@ export function handleTokenCreated(event: TokenCreated): void {
     // bondingCurve.poolBalance = fetchBondingCurvePoolBalance(event.params.bondingCurve)
     // bondingCurve.circulatingSupply = fetchBondingCurveCirculatingSupply(event.params.bondingCurve)
 
-    bondingCurve.ethAmountToCompleteCurve = fetchEthAmountToCompleteCurve(event.params.bondingCurve)
-    bondingCurve.tokenAmountToCompleteCurve = fetchTokenAmountToCompleteCurve(event.params.bondingCurve)
-
     bondingCurve.totalEthAmountToCompleteCurve = fetchTotalEthAmountToCompleteCurve(event.params.bondingCurve)
     bondingCurve.totalTokenAmountToCompleteCurve = fetchTotalTokenAmountToCompleteCurve(event.params.bondingCurve)
+
+    bondingCurve.ethAmountToCompleteCurve = fetchEthAmountToCompleteCurve(event.params.bondingCurve)
+    bondingCurve.tokenAmountToCompleteCurve = fetchTokenAmountToCompleteCurve(event.params.bondingCurve)
 
     bondingCurve.uniswapRouter = fetchBondingCurveUniswapRouter(event.params.bondingCurve)
 
@@ -271,6 +273,7 @@ export function handleTokenCreated(event: TokenCreated): void {
     bondingCurve.createdAtBlockNumber = event.block.number
     bondingCurve.active = true
     bondingCurve.txCount = ZERO_BI
+    bondingCurve.volume = ZERO_BD
     bondingCurve.lastActivity = event.block.timestamp
 
     // bondingCurve.factory = FACTORY_ADDRESS
@@ -279,13 +282,14 @@ export function handleTokenCreated(event: TokenCreated): void {
 
   bondingCurve.token = token.id
   token.bondingCurve = bondingCurve.id
-  // create the tracked contract based on the template
-  BondingCurveTemplate.create(event.params.bondingCurve)
 
   // save updated values
   token.save()
   bondingCurve.save()
   factory.save()
+
+  // create the tracked contract based on the template
+  BondingCurveTemplate.create(event.params.bondingCurve)
 }
 
 // export function handleTokenCreated(event: TokenCreated): void {

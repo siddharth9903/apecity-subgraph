@@ -201,12 +201,38 @@ export function fetchBondingCurveCurrentPrice(bondingCurveAddress: Address): Big
     let _supply = contract.try_getCirculatingSupply().value
     let _connectorBalance = contract.try_poolBalance().value
     let _connectorWeight = contract.try_reserveRatio().value
-    let _tokenAmountOut = BigInt.fromString(bigDecimalExp18().toString())
+    // let _tokenAmountOut = BigInt.fromString(bigDecimalExp18().toString())
+    let _tokenAmountOut = BigInt.fromString('1000000000000000000')
 
     let result = contract.try_estimateEthInForExactTokensOut(
         _supply , 
         _connectorBalance, 
         _connectorWeight, 
+        _tokenAmountOut
+    )
+    if (!result.reverted) {
+        currentPrice = result.value
+    }
+    return convertEthToDecimal(currentPrice)
+}
+
+export function fetchBondingCurveInitialPrice(bondingCurveAddress: Address): BigDecimal {
+    let initialPoolBalance = BigInt.fromString('8571428');
+    let _initialTokenSupply = BigInt.fromString('1000000000000000000000');
+    
+    let contract = BondingCurveContract.bind(bondingCurveAddress)
+    let currentPrice = BigInt.zero()
+
+    let _supply = _initialTokenSupply
+    let _connectorBalance = initialPoolBalance
+    let _connectorWeight = contract.try_reserveRatio().value
+    // let _tokenAmountOut = BigInt.fromString(bigDecimalExp18().toString())
+    let _tokenAmountOut = BigInt.fromString('1000000000000000000')
+
+    let result = contract.try_estimateEthInForExactTokensOut(
+        _supply,
+        _connectorBalance,
+        _connectorWeight,
         _tokenAmountOut
     )
     if (!result.reverted) {
@@ -268,8 +294,10 @@ export function fetchTotalTokenAmountToCompleteCurve(bondingCurveAddress: Addres
     let contract = BondingCurveContract.bind(bondingCurveAddress)
 
     let _initialTokenSupply = BigInt.fromString('1000000000000000000000');
-    let _connectorBalance = contract.try_poolBalance().value
+    // let _connectorBalance = contract.try_poolBalance().value
+    let _connectorBalance = initialPoolBalance
     let _connectorWeight = contract.try_reserveRatio().value
+    // let _connectorWeight = BigInt.fromString('500000');
     let _depositAmount = ethAmountValue
 
     let result = contract.try_calculatePurchaseReturn(

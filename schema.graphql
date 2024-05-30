@@ -92,6 +92,7 @@ type BondingCurve @entity {
 
   lastActivity: BigInt!
 
+  volume: BigDecimal!
   trades: [Trade!] @derivedFrom(field: "bondingCurve")
 }
 

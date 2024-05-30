@@ -80,6 +80,7 @@ export function handleBuy(event: LogBuy): void {
     transaction.trade = trade.id
 
     bondingCurve.lastActivity = trade.timestamp
+    bondingCurve.volume = bondingCurve.volume.plus(trade.inAmount)
     transaction.save()
     trade.save()
     bondingCurve.save()
@@ -123,6 +124,7 @@ export function handleSell(event: LogSell): void {
     transaction.trade = trade.id
 
     bondingCurve.lastActivity = trade.timestamp
+    bondingCurve.volume = bondingCurve.volume.plus(trade.outAmount)
     transaction.save()
     trade.save()
     bondingCurve.save()
