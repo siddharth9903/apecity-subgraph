@@ -11,9 +11,11 @@ import { ApeFactory as ApeFactoryContract } from '../types/templates/BondingCurv
 import { TokenDefinition } from './tokenDefinition'
 
 export const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
-// export const FACTORY_ADDRESS = '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f'
-// export const FACTORY_ADDRESS = '0x7722b77e691cea11047f030f1b128432a1a6ffca'
-export const FACTORY_ADDRESS = '0xb4FBc25204d26C4a937F4CBa67087F70B21bb6c5'
+//for base tenderly
+// export const FACTORY_ADDRESS = '0xb4FBc25204d26C4a937F4CBa67087F70B21bb6c5'
+//for base
+export const FACTORY_ADDRESS = '0x7722B77e691ceA11047f030f1b128432A1a6FfCA'
+
 
 export let ZERO_BI = BigInt.fromI32(0)
 export let ONE_BI = BigInt.fromI32(1)
