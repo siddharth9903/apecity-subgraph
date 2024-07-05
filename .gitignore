@@ -41,3 +41,5 @@ src/types/
 # yarn-error.log
 
 data/
+.DS_Store
+._*

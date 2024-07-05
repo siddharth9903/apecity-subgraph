@@ -61,7 +61,7 @@ https://3c0y2qovtk.execute-api.us-east-1.amazonaws.com/subgraphs/name/APE
 
 
 <!-- to check syncing status of graph -->
-<!-- curl --location 'https://3c0y2qovtk.execute-api.us-east-1.amazonaws.com/graphql' \
+<!-- curl --location 'http://gn-ec2-clr-dev-alb-626297434.us-east-1.elb.amazonaws.com/graphql' \
 --header 'Content-Type: application/json' \
 --header 'authorization: secretToken' \
 --data '{"query":"query { indexingStatuses { subgraph synced health fatalError { block { number } message handler } nonFatalErrors { block { number } message handler } chains { network chainHeadBlock { number } earliestBlock { number } latestBlock { number } lastHealthyBlock { number } } entityCount node } }","variables":{}}' -->
