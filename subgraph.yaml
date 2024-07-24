@@ -104,22 +104,17 @@ features:
 dataSources:
   - kind: ethereum
     name: ApeFactory
-    network: baseTenderly
+    network: tenderly
     source:
-    # For baseIdTenderly
-      # address: "0x89de37f99a0ea5a6594eda4ee567d97e1b8111d9"
-      # abi: ApeFactory
-      # startBlock: 16648974
-
+    # For tenderly
+      address: "0x0fDc7bf21a167A20C49FcA41CCbc3ABa354AcfbD"
+      abi: ApeFactory
+      startBlock: 17512642
     # # ForBase
     #   address: "0x89de37F99A0eA5A6594Eda4eE567d97e1b8111D9"
     #   abi: ApeFactory
     #   startBlock: 16654312
 
-    # # For BaseTenderly
-      address: "0x0fDc7bf21a167A20C49FcA41CCbc3ABa354AcfbD"
-      abi: ApeFactory
-      startBlock: 16693931
 
     mapping:
       kind: ethereum/events
