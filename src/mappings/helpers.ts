@@ -16,7 +16,7 @@ export const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
 // //for base
 // export const FACTORY_ADDRESS = '0x89de37f99a0ea5a6594eda4ee567d97e1b8111d9'
 //for baseTenderly
-export const FACTORY_ADDRESS = '0x0fDc7bf21a167A20C49FcA41CCbc3ABa354AcfbD'
+export const FACTORY_ADDRESS = '0x89de37F99A0eA5A6594Eda4eE567d97e1b8111D9'
 
 
 export let ZERO_BI = BigInt.fromI32(0)
